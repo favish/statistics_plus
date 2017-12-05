@@ -1,0 +1,35 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+function statistics_plus_install() {
+  $spec = [
+    'type' => 'int',
+    'unsigned' => TRUE,
+    'not null' => TRUE,
+    'default' => 0,
+    'size' => 'big',
+  ];
+  $hotfuzzcount_spec = array_merge($spec,
+    ['description' =>
+      'Count for extra views added in first several minutes after node creation'
+    ]);
+  $randomfuzzcount_spec = array_merge($spec,
+    ['description' =>
+      'Count for extra views added by random chance'
+    ]);
+  $totalfuzzcount_spec = array_merge($spec,
+    ['description' =>
+      'Normal total count plus all fuzz'
+    ]);
+  $schema = Database::getConnection()->schema();
+  if (!$schema->fieldExists('node_counter', 'hotfuzzcount')) {
+    $schema->addField('node_counter', 'hotfuzzcount', $hotfuzzcount_spec);
+  }
+  if (!$schema->fieldExists('node_counter', 'randomfuzzcount')) {
+    $schema->addField('node_counter', 'randomfuzzcount', $randomfuzzcount_spec);
+  }
+  if (!$schema->fieldExists('node_counter', 'totalfuzzcount')) {
+    $schema->addField('node_counter', 'totalfuzzcount', $totalfuzzcount_spec);
+  }
+}

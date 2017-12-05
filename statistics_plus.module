@@ -1,0 +1,15 @@
+<?php
+
+function statistics_plus_preprocess_node(&$vars) {
+  $vars['extras']['views'] = [
+    '#type' => 'html_tag',
+    '#tag' => 'span',
+    '#attributes' => [
+      'data-entityid' => $vars['node']->id(),
+      'data-statistics' => '',
+    ],
+    '#attached' => [
+      'library' => ['statistics_plus/statistics_ajax']
+    ]
+  ];
+}

@@ -1,0 +1,8 @@
+name: Statistics Plus
+description: Allow statistics counts to be added to nodes via Ajax with optional fuzzing.
+core: 8.x
+package: custom
+type: module
+dependencies:
+  - statistics
+version: '8.x-1.00'
