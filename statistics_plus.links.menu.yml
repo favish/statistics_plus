@@ -1,0 +1,5 @@
+statistics_plus.settings_form:
+ title: 'Statistics Plus Settings'
+ description: Set configuration for statistics_plus module.
+ parent: system.admin_config_system
+ route_name: statistics_plus.settings_form

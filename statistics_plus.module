@@ -1,5 +1,10 @@
 <?php
 
+function statistics_plus_page_attachments_alter(&$build) {
+  $config = \Drupal::service('config.factory')->getEditable('statistics_plus.settings');
+  $build['#attached']['drupalSettings']['statistics_plus']['icon_placement'] = $config->get('icon_placement');
+}
+
 function statistics_plus_preprocess_node(&$vars) {
   $vars['extras']['views'] = [
     '#type' => 'html_tag',

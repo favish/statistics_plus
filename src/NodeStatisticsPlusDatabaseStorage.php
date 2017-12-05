@@ -3,12 +3,46 @@
 namespace Drupal\statistics_plus;
 
 use Drupal\statistics\NodeStatisticsDatabaseStorage;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\State\StateInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\statistics\StatisticsViewsResult;
 
 /**
  * Provides the default database storage backend for statistics.
  */
 class NodeStatisticsPlusDatabaseStorage extends NodeStatisticsDatabaseStorage {
+
+  /**
+   * The configuration factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  public function __construct(Connection $connection, StateInterface $state, RequestStack $request_stack, ConfigFactoryInterface $config_factory) {
+    $this->configFactory = $config_factory;
+    parent::__construct($connection, $state, $request_stack);
+  }
+  
+  /**
+   * Fetch view counts based on fuzz configuration.
+
+   * @param array $ids
+   *   The ids of the entities to get counts for.
+   * @return mixed - Return the resulting method invocation.
+   */
+  public function fetchViewCounts($ids) {
+    $fetchMethod = 'fetchTotalViewCounts';
+
+    $enable_fuzz = $this->configFactory->get('statistics_plus.settings')->get('enable_fuzz');
+    if ($enable_fuzz) {
+      $fetchMethod = 'fetchFuzzedViewCounts';
+    }
+
+    return $this->{$fetchMethod}($ids);
+  }
 
   /**
    * Get total view counts for one entity.

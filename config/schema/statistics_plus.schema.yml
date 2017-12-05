@@ -1,0 +1,10 @@
+statistics_plus.settings:
+  type: config_object
+  label: 'Statistics Plus config'
+  mapping:
+    enable_fuzz:
+      type: integer
+      label: 'Enable fuzz on view counts'
+    icon_placement:
+      type: text
+      label: 'Icon Placement'

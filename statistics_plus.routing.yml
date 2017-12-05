@@ -1,7 +1,15 @@
-statistics_ajax.endpoint:
+statistics_plus.ajax_endpoint:
   path: '/statistics-ajax'
   defaults:
     _controller: '\Drupal\statistics_plus\Controller\EndpointController::get'
     _title: 'Statistics Ajax'
   requirements:
     _permission: 'access content'
+
+statistics_plus.settings_form:
+ path: 'admin/config/system/statistics_plus'
+ defaults:
+   _form: '\Drupal\statistics_plus\Form\StatisticsPlusSettingsForm'
+   _title: 'Statistics Plus Settings'
+ requirements:
+   _permission: 'administer site configuration'

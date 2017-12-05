@@ -1,3 +1,6 @@
 statistics_ajax:
   js:
     statistics_ajax.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

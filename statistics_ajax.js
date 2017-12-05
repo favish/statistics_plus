@@ -1,4 +1,4 @@
-(function($, Drupal) {
+(function($, Drupal, drupalSettings) {
   Drupal.behaviors.statistics_ajax = {
     attach: function (context) {
       var $counters = $('[data-statistics]', context);
@@ -20,7 +20,9 @@
             var nodeIds = Object.keys(viewCountsById);
             nodeIds.forEach(function(nodeId) {
               counterElementsById[nodeId].text(viewCountsById[nodeId]);
-              counterElementsById[nodeId].append(
+              // Decide the order of the view counts text and the icon.
+              var method = getMethodByPosition(drupalSettings.statistics_plus.icon_placement);
+              counterElementsById[nodeId][method](
                 '<i class="fa fa-eye" aria-hidden="true" style="margin-left:0.25em; font-weight: bold; display: inline"></i>'
               );
             })
@@ -29,7 +31,15 @@
         error: function(error) {
           console.error(error);
         }
-      })
+      });
+
+      function getMethodByPosition(position) {
+        var method = 'append';
+        if (position === 'before') {
+          method = 'prepend';
+        }
+        return method;
+      }
     }
   }
-})(jQuery, Drupal);
+})(jQuery, Drupal, drupalSettings);
