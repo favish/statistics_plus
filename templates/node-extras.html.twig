@@ -1,0 +1,19 @@
+{#
+    Alternative to drupal's links, add items to the $vars['extras'] array in preprocess_node.
+
+    link items added to the extras array can have
+    - attributes
+    - title
+    - text
+    - href
+#}
+
+{% if extras -%}
+  <ul class="node__extras">
+    {%- for key, item in extras -%}
+      <li class="extras__{{ key }}">
+        {{ item }}
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif %}
