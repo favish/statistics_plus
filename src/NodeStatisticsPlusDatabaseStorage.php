@@ -44,6 +44,11 @@ class NodeStatisticsPlusDatabaseStorage extends NodeStatisticsDatabaseStorage {
     return $this->{$fetchMethod}($ids);
   }
 
+  public function fetchViewCount($id) {
+    $views = $this->fetchViewCounts([$id]);
+    return reset($views);
+  }
+
   /**
    * Get total view counts for one entity.
    *
